@@ -125,21 +125,18 @@ Acest proiect implementează un **server inteligent de servire modele AI** cu ru
 
 ## Instalare
 
-### Prerequisite:
+### Modelele AI Utilizate
 
-```bash
-# Python 3.9+
-python --version
+În acest proiect au fost folosite două modele LLM furnizate prin Ollama:
 
-# Ollama (pentru LLM-uri locale)
-brew install ollama  # macOS
-# sau https://ollama.ai pentru alte platforme
-```
+- **gemma3:1b** — Modelul A, optimizat pentru viteză. Latență mică (2–8s) și potrivit pentru întrebări scurte sau medii.
+- **gemma2:2b** — Modelul B, optimizat pentru acuratețe. Răspunsuri mai detaliate, însă cu latență mai mare (10–40s).
+
+Sistemul selectează automat modelul potrivit folosind rutare adaptivă bazată pe p95 latency, cu fallback și circuit breaker pentru reziliență.
 
 ### Instalare modele:
 
 ```bash
-# Descarcă modelele necesare
 ollama pull gemma3:1b   # Model A - rapid (815 MB)
 ollama pull gemma2:2b   # Model B - precis (1.6 GB)
 
@@ -150,17 +147,14 @@ ollama list
 ### Setup proiect:
 
 ```bash
-# Clone repository
 git clone <repository-url>
 cd CircuitBreaker
 
-# Creare virtual environment
 python3 -m venv .venv
 source .venv/bin/activate  # macOS/Linux
-# sau .venv\Scripts\activate  # Windows
 
 # Instalare dependențe
-pip install ollama  # sau doar requests
+pip install ollama
 ```
 
 ---
@@ -170,14 +164,12 @@ pip install ollama  # sau doar requests
 ### Pornire Ollama Server:
 
 ```bash
-# Terminal 1 - Pornește Ollama
 ollama serve
 ```
 
 ### Rulare Chatbot:
 
 ```bash
-# Terminal 2 - Activează venv și rulează
 source .venv/bin/activate
 python3 ServerServer.py
 ```
@@ -279,7 +271,7 @@ class Bulkhead:
 
 ---
 
-## 📊 Demonstrație
+## Demonstrație
 
 ### Output Exemplu:
 
@@ -367,13 +359,6 @@ Models: gemma3:1b (Model A - fast) & gemma2:2b (Model B - accurate)
 | **HTTP Client** | ollama-python      | 0.4.0+   |
 | **Logging**     | logging            | stdlib   |
 | **Type Hints**  | typing             | stdlib   |
-
-### Dependențe:
-
-```txt
-ollama>=0.4.0      # Recommended
-requests>=2.31.0   # Fallback
-```
 
 ---
 
